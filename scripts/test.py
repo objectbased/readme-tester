@@ -9,7 +9,7 @@ root = "H:\\readme-tester\\"
 github_repo_url = "https://github.com/objectbased/readme-tester/blob/main/syslog-ng/conf.d/integrations/"
 
 # Define the regex pattern to extract information from the conf files
-pattern = r'input\( source\((\w+)\) port\((\d+)\) protocol\("(\w+)"\)'
+pattern = r'input\( source\((\w+)\) port\((\d+)\) protocol\("(\w+)"\)(?: protocol2\("(\w+)"\))?'
 
 # Create an empty DataFrame to store the extracted data
 data = []
@@ -21,8 +21,11 @@ for filename in os.listdir(conf_directory):
             content = file.read()
             matches = re.findall(pattern, content)
             for match in matches:
+                source, port, protocol, protocol2 = match
+                if protocol2:
+                    protocol = f"{protocol},{protocol2}"
                 file_url = github_repo_url + filename
-                data.append((*match, file_url))
+                data.append((source, int(port), protocol, file_url))
 
 # Create a DataFrame from the extracted data
 df = pd.DataFrame(data, columns=["source", "port", "protocol", "origin"])
