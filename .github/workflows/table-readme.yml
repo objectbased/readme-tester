@@ -33,15 +33,14 @@ jobs:
         python3 scripts/gha.py
 
     - name: Check for changes
-      id: check_changes
       run: |
         if git diff --quiet; then
           echo "No changes found, skipping commit step."
-          echo "status=fail" >> $GITHUB_ENV
+          echo "status=none" >> $GITHUB_ENV
         fi
 
-    - name: Commit changes
-      if: env.status == 'fail'  # Only run if check_changes did not fail
+    - name: Commit changes if found
+      if: env.status != 'none'
       run: |
         git commit -a -m "Auto-update README"
         git push
