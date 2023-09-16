@@ -41,7 +41,7 @@ jobs:
         fi
 
     - name: Commit changes
-      if: steps.check_changes.outputs.status == 'fail'  # Only run if check_changes did not fail
+      if: env.status == 'fail'  # Only run if check_changes did not fail
       run: |
         git commit -a -m "Auto-update README"
         git push
