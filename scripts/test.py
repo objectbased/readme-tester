@@ -28,7 +28,10 @@ for filename in os.listdir(conf_directory):
 df = pd.DataFrame(data, columns=["source", "port", "protocol", "origin"])
 
 # Sort the DataFrame by source for better organization
-df.sort_values(by="source", inplace=True)
+df.sort_values(by="port", inplace=True)
+
+# Reset the index after sorting
+df.reset_index(drop=True, inplace=True)
 
 # Create a clickable link for the "origin" column
 df["origin"] = df["origin"].apply(lambda x: f'[Link]({x})')
