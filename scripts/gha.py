@@ -5,6 +5,9 @@ from tabulate import tabulate
 
 # Define the directory containing the .conf files
 conf_directory = "H:\\readme-tester\\syslog-ng\\conf.d\\integrations"
+script_directory = os.path.dirname(os.path.abspath(__file__))
+parent_directory = os.path.dirname(script_directory)
+print(parent_directory)
 root = "H:\\readme-tester\\"
 
 github_repo_url = "https://github.com/objectbased/readme-tester/blob/main/syslog-ng/conf.d/integrations/"
