@@ -31,9 +31,17 @@ jobs:
         pip3 install pandas
         pip3 install tabulate
         python3 scripts/gha.py
-        git status  # Check for changes in the working directory
+
+    - name: Check for changes
+      id: check_changes
+      run: |
+        if git diff --quiet; then
+          echo "No changes found, skipping commit step."
+          exit 1  # Exit with an error to prevent subsequent steps from running
+        fi
 
     - name: Commit changes
+      if: steps.check_changes.outcome != 'failure'  # Only run if check_changes did not fail
       run: |
         git config --global user.email "actions@github.com"
         git config --global user.name "GitHub Actions"
