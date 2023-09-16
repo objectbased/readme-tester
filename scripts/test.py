@@ -25,10 +25,11 @@ for filename in os.listdir(conf_directory):
                 if protocol2:
                     protocol = f"{protocol},{protocol2}"
                 file_url = github_repo_url + filename
-                data.append((source, int(port), protocol, file_url))
+                syslog_path = "/var/log/forward/%s/${HOST}/%s_${YEAR}-${MONTH}-${DAY}.log" % (source, source)
+                data.append((source, int(port), protocol, syslog_path, file_url))
 
 # Create a DataFrame from the extracted data
-df = pd.DataFrame(data, columns=["source", "port", "protocol", "origin"])
+df = pd.DataFrame(data, columns=["source", "port", "protocol", "path", "origin"])
 
 # Sort the DataFrame by source for better organization
 df.sort_values(by="port", inplace=True)
