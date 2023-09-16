@@ -1,0 +1,34 @@
+name: Update port tracker
+on:
+  workflow_dispatch:
+  push:
+    branches: ['main']
+    paths: ['syslog-ng/conf.d/integrations/**']
+
+jobs:
+  update-port-tracker:
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      id-token: write
+      contents: read
+      
+    steps:
+    - name: Git Clone current repository
+      uses: actions/checkout@v3
+        
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.10
+        
+    - name: Print current directory
+      run: |
+        echo "The current directory is: $GITHUB_WORKSPACE"
+        
+    - name: Run Python script
+      run: |
+        pip3 install pandas
+        pip3 install tabulate
+        python3 scripts/gha.py
+        git status  # Check for changes in the working directory
