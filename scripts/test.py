@@ -34,7 +34,7 @@ for filename in os.listdir(conf_directory):
                 data.append((source, port, protocol, syslog_path, app, comment, file_url))
 
 # Create a DataFrame from the extracted data
-df = pd.DataFrame(data, columns=["apps", "comment", "source", "port", "protocol", "path", "origin"])
+df = pd.DataFrame(data, columns=["source", "port", "protocol", "path", "apps", "comment", "origin"])
 
 # Sort the DataFrame by source for better organization
 df.sort_values(by="port", inplace=True)
