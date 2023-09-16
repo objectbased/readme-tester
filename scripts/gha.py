@@ -4,11 +4,9 @@ import pandas as pd
 from tabulate import tabulate
 
 # Define the directory containing the .conf files
-conf_directory = "H:\\readme-tester\\syslog-ng\\conf.d\\integrations"
 script_directory = os.path.dirname(os.path.abspath(__file__))
 parent_directory = os.path.dirname(script_directory)
-print(parent_directory)
-root = "H:\\readme-tester\\"
+conf_directory = parent_directory + "/syslog-ng/conf.d/integrations"
 
 github_repo_url = "https://github.com/objectbased/readme-tester/blob/main/syslog-ng/conf.d/integrations/"
 
@@ -54,7 +52,7 @@ df["origin"] = df["origin"].apply(lambda x: f'[Link]({x})')
 table = tabulate(df, headers='keys', tablefmt='pipe', stralign='left', numalign='left', showindex='never', disable_numparse=True)
 
 # Update the README.md file with the extracted data
-with open(root + "README.md", 'w+') as readme_file:
+with open(parent_directory + "/README.md", 'w+') as readme_file:
     readme_file.write("## Syslog-ng Port Tracker\n")                      
     readme_file.write(table)
 
