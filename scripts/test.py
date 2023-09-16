@@ -30,6 +30,9 @@ df = pd.DataFrame(data, columns=["source", "port", "protocol", "origin"])
 # Sort the DataFrame by source for better organization
 df.sort_values(by="source", inplace=True)
 
+# Create a clickable link for the "origin" column
+df["origin"] = df["origin"].apply(lambda x: f'[Link]({x})')
+
 # Update the README.md file with the extracted data
 with open(root + "README.md", 'w+') as readme_file:
     readme_file.write("\n\n## Extracted Configuration Data\n")
