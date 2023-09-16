@@ -42,7 +42,7 @@ df["origin"] = df["origin"].apply(lambda x: f'[Link]({x})')
 
 # Update the README.md file with the extracted data
 with open(root + "README.md", 'w+') as readme_file:
-    readme_file.write("\n\n## Extracted Configuration Data\n")
+    readme_file.write("\n\n## Syslog-ng Port Tracker\n")
     readme_file.write(df.to_markdown(index=False))
 
 print("Data extraction and README update complete.")
