@@ -10,7 +10,7 @@ root = "H:\\readme-tester\\"
 github_repo_url = "https://github.com/objectbased/readme-tester/blob/main/syslog-ng/conf.d/integrations/"
 
 # Define the regex pattern to extract information from the conf files
-pattern = r'input\( source\((\w+)\) port\((\w+)\) protocol\("(\w+)"\)(?: protocol2\("(\w+)"\))?'
+pattern = r'input\( source\((\w+)\) port\((\w+)\) protocol\("(\w+)"\)(?:.*?protocol2\("(\w+)"\))?'
 comments = r'Comments\:(.*?)\n'
 apps = r'Apps:(.*?)\n'
 
@@ -22,7 +22,9 @@ for filename in os.listdir(conf_directory):
     if filename.endswith(".conf"):
         with open(os.path.join(conf_directory, filename), 'r') as file:
             content = file.read()
+            print(content)
             matches = re.findall(pattern, content)
+            print(matches)
             comments_match = re.findall(comments, content)
             apps_match = re.findall(apps, content)
             for match, comment, app in zip(matches, comments_match, apps_match):
