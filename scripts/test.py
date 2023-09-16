@@ -46,7 +46,7 @@ df.reset_index(drop=True, inplace=True)
 df["origin"] = df["origin"].apply(lambda x: f'[Link]({x})')
 
 # Convert the DataFrame to a markdown table with left-aligned "port" column
-table = tabulate(df, headers='keys', tablefmt='pipe', stralign='left', numalign='left', showindex='never')
+table = tabulate(df, headers='keys', tablefmt='pipe', stralign='left', numalign='left', showindex='never', disable_numparse=True)
 
 # Update the README.md file with the extracted data
 with open(root + "README.md", 'w+') as readme_file:
