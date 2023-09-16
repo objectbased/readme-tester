@@ -6,6 +6,8 @@ import pandas as pd
 conf_directory = "H:\\readme-tester\\syslog-ng\\conf.d\\integrations"
 root = "H:\\readme-tester\\"
 
+github_repo_url = "https://github.com/readme-tester/blob/main/syslog-ng/conf.d/integrations/"
+
 # Define the regex pattern to extract information from the conf files
 pattern = r'input\( source\((\w+)\) port\((\d+)\) protocol\("(\w+)"\)'
 
@@ -19,10 +21,11 @@ for filename in os.listdir(conf_directory):
             content = file.read()
             matches = re.findall(pattern, content)
             for match in matches:
-                data.append(match)
+                file_url = github_repo_url + filename
+                data.append((*match, file_url))
 
 # Create a DataFrame from the extracted data
-df = pd.DataFrame(data, columns=["source", "port", "protocol"])
+df = pd.DataFrame(data, columns=["source", "port", "protocol", "origin"])
 
 # Sort the DataFrame by source for better organization
 df.sort_values(by="source", inplace=True)
