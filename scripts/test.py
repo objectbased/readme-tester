@@ -6,7 +6,7 @@ import pandas as pd
 conf_directory = "H:\\readme-tester\\syslog-ng\\conf.d\\integrations"
 root = "H:\\readme-tester\\"
 
-github_repo_url = "https://github.com/readme-tester/blob/main/syslog-ng/conf.d/integrations/"
+github_repo_url = "https://github.com/objectbased/readme-tester/blob/main/syslog-ng/conf.d/integrations/"
 
 # Define the regex pattern to extract information from the conf files
 pattern = r'input\( source\((\w+)\) port\((\d+)\) protocol\("(\w+)"\)'
