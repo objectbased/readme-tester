@@ -7,7 +7,6 @@ from tabulate import tabulate
 script_directory = os.path.dirname(os.path.abspath(__file__))
 parent_directory = os.path.dirname(script_directory)
 conf_directory = parent_directory + "/syslog-ng/conf.d/integrations"
-
 github_repo_url = "https://github.com/objectbased/readme-tester/blob/main/syslog-ng/conf.d/integrations/"
 
 # Define the regex pattern to extract information from the conf files
@@ -23,9 +22,7 @@ for filename in os.listdir(conf_directory):
     if filename.endswith(".conf"):
         with open(os.path.join(conf_directory, filename), 'r') as file:
             content = file.read()
-            print(content)
             matches = re.findall(pattern, content)
-            print(matches)
             comments_match = re.findall(comments, content)
             apps_match = re.findall(apps, content)
             for match, comment, app in zip(matches, comments_match, apps_match):
@@ -51,9 +48,18 @@ df["origin"] = df["origin"].apply(lambda x: f'[Link]({x})')
 # Convert the DataFrame to a markdown table with left-aligned "port" column
 table = tabulate(df, headers='keys', tablefmt='pipe', stralign='left', numalign='left', showindex='never', disable_numparse=True)
 
+# Pull existing content before update
+with open(parent_directory + "/README.md", 'r') as readme_file:
+    existing_content  = readme_file.read()
+
+# Find the start and end of the "Syslog-ng Port Tracker" section
+start_of_section = existing_content.find("## Syslog-ng Port Tracker")
+
+# Construct the updated README content
+updated_readme_content = existing_content[:start_of_section] + "## Syslog-ng Port Tracker\n" + table
+
 # Update the README.md file with the extracted data
-with open(parent_directory + "/README.md", 'w+') as readme_file:
-    readme_file.write("## Syslog-ng Port Tracker\n")                      
-    readme_file.write(table)
+with open(parent_directory + "/README.md", 'w') as readme_file:
+    readme_file.write(updated_readme_content)
 
 print("Data extraction and README update complete.")
